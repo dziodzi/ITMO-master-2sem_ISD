@@ -2,6 +2,7 @@ package io.github.dziodzi.config;
 
 import io.github.dziodzi.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,24 +31,40 @@ public class SecurityConfig {
     private final JwtAuthFilter jwtAuthFilter;
     private final UserService userService;
 
+    @Value("${custom.address}")
+    private String address;
+
+    @Value("${custom.ports.this}")
+    private int thisPort;
+
+    @Value("${custom.ports.neural-network}")
+    private int neuralNetworkPort;
+
+    @Value("${custom.ports.frontend}")
+    private int frontendPort;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(request -> {
                     var corsConfiguration = new CorsConfiguration();
-                    corsConfiguration.setAllowedOriginPatterns(List.of("*"));
+                    corsConfiguration.setAllowedOrigins(List.of(
+                            address + ":" + thisPort,
+                            address + ":" + neuralNetworkPort,
+                            address + ":" + frontendPort
+                    ));
                     corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     corsConfiguration.setAllowedHeaders(List.of("*"));
                     corsConfiguration.setAllowCredentials(true);
                     return corsConfiguration;
                 }))
-
                 .authorizeHttpRequests(request -> request
-//                        .requestMatchers("/auth/**").permitAll()
-//                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
-//                        .requestMatchers("/endpoint", "/admin/**").hasRole("ADMIN")
-//                        .anyRequest().authenticated())
-                        .anyRequest().permitAll())
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/images/upload").authenticated()
+                        .requestMatchers("/images/**", "verification-history/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

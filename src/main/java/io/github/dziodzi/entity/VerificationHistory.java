@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Builder
@@ -36,7 +36,7 @@ public class VerificationHistory {
     private User user;
 
     @Column(name = "verification_date", nullable = false)
-    private LocalDate verificationDate;
+    private LocalDateTime verificationDate;
 
     @Column(name = "result", nullable = false)
     private String result;

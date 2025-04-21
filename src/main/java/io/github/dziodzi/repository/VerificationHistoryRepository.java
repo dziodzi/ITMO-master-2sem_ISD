@@ -6,7 +6,7 @@ import io.github.dziodzi.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -16,9 +16,9 @@ public interface VerificationHistoryRepository extends JpaRepository<Verificatio
 
     List<VerificationHistory> findByImage(Image image);
 
-    List<VerificationHistory> findByVerificationDateBetween(LocalDate startDate, LocalDate endDate);
+    List<VerificationHistory> findByVerificationDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 
     List<VerificationHistory> findByResult(String result);
 
-    List<VerificationHistory> findByUserAndVerificationDateBetween(User user, LocalDate startDate, LocalDate endDate);
+    List<VerificationHistory> findByUserAndVerificationDateBetween(User user, LocalDateTime startDate, LocalDateTime endDate);
 }

@@ -9,9 +9,8 @@ import io.github.dziodzi.tools.LogExecutionTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -45,25 +44,11 @@ public class VerificationHistoryService {
         return historyRepository.findByImage(image);
     }
 
-    public List<VerificationHistory> findByDateRange(LocalDate from, LocalDate to) {
+    public List<VerificationHistory> findByDateRange(LocalDateTime from, LocalDateTime to) {
         return historyRepository.findByVerificationDateBetween(from, to);
     }
 
     public List<VerificationHistory> findByResult(String result) {
         return historyRepository.findByResult(result);
-    }
-
-    // TODO получаем от модельки ответ, записываем и кидаем дальше
-    public VerificationHistory createFromJson(String resultJson, Image image, User user) {
-        String id = UUID.randomUUID().toString();
-        String result = resultJson.contains("Real") ? "Real" : "Fake";
-        VerificationHistory history = VerificationHistory.builder()
-                .id(id)
-                .image(image)
-                .user(user)
-                .result(result)
-                .verificationDate(LocalDate.now())
-                .build();
-        return save(history);
     }
 }

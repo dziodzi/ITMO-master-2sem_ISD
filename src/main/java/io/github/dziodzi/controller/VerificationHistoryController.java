@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -42,7 +42,7 @@ public class VerificationHistoryController implements VerificationHistoryAPI {
     @Override
     @GetMapping("/all")
     public ResponseEntity<List<VerificationHistory>> getAllVerificationHistories() {
-        return ResponseEntity.ok(verificationHistoryService.findByDateRange(LocalDate.MIN, LocalDate.MAX));
+        return ResponseEntity.ok(verificationHistoryService.findByDateRange(LocalDateTime.MIN, LocalDateTime.MAX));
     }
 
     @Override
@@ -54,8 +54,8 @@ public class VerificationHistoryController implements VerificationHistoryAPI {
             @RequestParam(required = false) String result) {
 
         List<VerificationHistory> histories = verificationHistoryService.findByDateRange(
-                verificationDate != null ? LocalDate.parse(verificationDate) : LocalDate.MIN,
-                LocalDate.now()
+                verificationDate != null ? LocalDateTime.parse(verificationDate) : LocalDateTime.MIN,
+                LocalDateTime.now()
         );
 
         if (imageId != null) {

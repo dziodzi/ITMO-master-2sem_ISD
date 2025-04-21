@@ -5,16 +5,10 @@ import io.github.dziodzi.exception.NotFoundException;
 import io.github.dziodzi.repository.ImageRepository;
 import io.github.dziodzi.tools.LogExecutionTime;
 import lombok.RequiredArgsConstructor;
-import org.apache.tika.Tika;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,11 +16,6 @@ import java.util.UUID;
 public class ImageService {
 
     private final ImageRepository imageRepository;
-
-    @Value("${storage.directory:/store}")
-    private String storageDirectory;
-
-    private final Tika tika = new Tika();
 
     public Image save(Image image) {
         return imageRepository.save(image);
@@ -37,7 +26,7 @@ public class ImageService {
                 .orElseThrow(() -> new NotFoundException("Image not found"));
     }
 
-    public List<Image> getByUploadDateRange(LocalDate from, LocalDate to) {
+    public List<Image> getByUploadDateRange(LocalDateTime from, LocalDateTime to) {
         return imageRepository.findByUploadDateBetween(from, to);
     }
 
@@ -65,28 +54,5 @@ public class ImageService {
         Image image = getById(id);
         image.setFilepath(newPath);
         imageRepository.save(image);
-    }
-
-    public Image handleImageUpload(MultipartFile file) throws IOException {
-        String mimeType = tika.detect(file.getBytes());
-        if (!mimeType.startsWith("image/")) {
-            throw new IllegalArgumentException("Uploaded file is not a valid image.");
-        }
-
-        String fileId = UUID.randomUUID().toString();
-        String originalFilename = file.getOriginalFilename();
-        String newFilename = fileId + "_" + (originalFilename != null ? originalFilename : "image.png");
-
-        File dest = new File(storageDirectory, newFilename);
-        dest.getParentFile().mkdirs();
-        file.transferTo(dest);
-
-        Image image = Image.builder()
-                .id(fileId)
-                .filepath(dest.getAbsolutePath())
-                .uploadDate(LocalDate.now())
-                .build();
-
-        return imageRepository.save(image);
     }
 }
