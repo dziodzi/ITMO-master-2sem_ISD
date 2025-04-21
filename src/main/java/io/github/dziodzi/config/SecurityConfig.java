@@ -2,6 +2,7 @@ package io.github.dziodzi.config;
 
 import io.github.dziodzi.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -31,17 +33,24 @@ public class SecurityConfig {
     private final JwtAuthFilter jwtAuthFilter;
     private final UserService userService;
 
-    @Value("${custom.address}")
-    private String address;
+    @Value("${custom.neural-network.address}")
+    private String neuralNetworkAddress;
 
-    @Value("${custom.ports.this}")
-    private int thisPort;
-
-    @Value("${custom.ports.neural-network}")
+    @Value("${custom.neural-network.port}")
     private int neuralNetworkPort;
 
-    @Value("${custom.ports.frontend}")
+    @Value("${custom.frontend.address}")
+    private String frontendAddress;
+
+    @Value("${custom.frontend.port}")
     private int frontendPort;
+
+    @Value("${custom.my-app.address}")
+    private String myAddress;
+
+    @Value("${custom.my-app.port}")
+    private int myPort;
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -49,9 +58,9 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(request -> {
                     var corsConfiguration = new CorsConfiguration();
                     corsConfiguration.setAllowedOrigins(List.of(
-                            address + ":" + thisPort,
-                            address + ":" + neuralNetworkPort,
-                            address + ":" + frontendPort
+                            "http://" + frontendAddress + ":" + frontendPort,
+                            "http://" + myAddress + ":" + myPort,
+                            "http://" + neuralNetworkAddress + ":" + neuralNetworkPort
                     ));
                     corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     corsConfiguration.setAllowedHeaders(List.of("*"));

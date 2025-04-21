@@ -2,6 +2,12 @@ spring:
   application:
     name: isd_backend
 
+  profiles:
+    active: prod
+
+  config:
+    import: optional:classpath:/application-${spring.profiles.active}.yml
+
   servlet:
     multipart:
       max-file-size: 5MB
@@ -25,20 +31,31 @@ spring:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
 
-storage:
-  directory: /Users/dziodzi/Desktop
-
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
   api-docs:
     path: /v3/api-docs
 
+logging:
+  level:
+    org.springframework.boot.context.config: DEBUG
+
 custom:
-  address: http://localhost
-  ports:
-    this: 8080
-    neural-network: 5001
-    frontend: 3001
+  frontend:
+    address: ${custom.frontend.address}
+    port: ${custom.frontend.port}
+
+  my-app:
+    address: ${custom.my-app.address}
+    port: ${custom.my-app.port}
+
+  neural-network:
+    address: ${custom.neural-network.address}
+    port: ${custom.neural-network.port}
+
+  storage:
+    directory: ${custom.storage.directory}
+
   tokens:
-    sign-key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQSflKxwRJSMeKKF2QT4fwpMeJf36POk6yJVadQssw5c"
+    sign-key: ${custom.tokens.sign-key}

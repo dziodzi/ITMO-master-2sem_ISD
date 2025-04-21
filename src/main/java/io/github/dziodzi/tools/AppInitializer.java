@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AppInitializer {
 
-    @Value("${custom.ports.this}")
-    private String port;
+    @Value("${custom.my-app.port}")
+    private int port;
 
-    @Value("${custom.address}")
+    @Value("${custom.my-app.address}")
     private String address;
 
     @Value("${springdoc.swagger-ui.path}")
@@ -26,7 +26,7 @@ public class AppInitializer {
 
     @EventListener(ApplicationReadyEvent.class)
     public void onApplicationReady() {
-        log.info("Swagger UI is available at: {}:{}{}", address, port, swaggerUrl);
-        log.info("API documentation is available at: {}:{}{}", address, port, apiUrl);
+        log.info("Swagger UI is available at: http://{}:{}{}", address, port, swaggerUrl);
+        log.info("API documentation is available at: http://{}:{}{}", address, port, apiUrl);
     }
 }

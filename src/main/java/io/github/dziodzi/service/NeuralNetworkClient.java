@@ -22,21 +22,28 @@ import java.io.File;
 @Slf4j
 public class NeuralNetworkClient {
 
-    @Value("${custom.address}")
-    private String address;
+    @Value("${custom.neural-network.address}")
+    private String neuralNetworkAddress;
 
-    @Value("${custom.ports.neural-network}")
+    @Value("${custom.neural-network.port}")
     private int neuralNetworkPort;
+
+    @Value("${custom.neural-network.address}")
+    private String myAddress;
+
+    @Value("${custom.neural-network.port}")
+    private int myPort;
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public PredictionResponse sendImageToPrediction(File imageFile) {
 
-        String url = address + ":" + neuralNetworkPort + "/predict";
+        String url = "http://" + neuralNetworkAddress + ":" + neuralNetworkPort + "/predict";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        headers.set("Origin", "http://" + myAddress + ":" + myPort);
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("file", new FileSystemResource(imageFile));

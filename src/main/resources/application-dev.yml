@@ -1,0 +1,18 @@
+custom:
+  frontend:
+    address: "localhost"
+    port: 3001
+
+  my-app:
+    address: "localhost"
+    port: 8080
+
+  neural-network:
+    address: "localhost"
+    port: 5001
+
+  storage:
+    directory: "/store"
+
+  tokens:
+    sign-key: "21a6a8df649e0203c0af08f149d4d1ba82589e79d00244878443a2889757a91d"

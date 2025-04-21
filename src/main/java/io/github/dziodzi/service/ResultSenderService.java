@@ -41,7 +41,7 @@ public class ResultSenderService {
 
     private final Tika tika = new Tika();
 
-    @Value("${storage.directory:/store}")
+    @Value("${custom.storage.directory}")
     private String storageDirectory;
 
     public ResponseWrapper handleImageUpload(MultipartFile file, HttpServletRequest request) {
