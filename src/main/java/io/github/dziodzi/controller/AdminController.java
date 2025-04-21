@@ -8,6 +8,6 @@ public class AdminController implements AdminAPI {
 
     @Override
     public String index() {
-        return "Hello World";
+        return "OK";
     }
 }

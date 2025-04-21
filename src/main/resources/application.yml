@@ -1,32 +1,44 @@
 spring:
   application:
     name: isd_backend
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
   datasource:
     url: jdbc:postgresql://localhost:5432/isd_backend
     username: postgres
     password: 7296
     driver-class-name: org.postgresql.Driver
-    jpa:
-      hibernate:
-        ddl-auto: update
-      properties:
-        hibernate:
-          dialect: org.hibernate.dialect.PostgreSQLDialect
-    liquibase:
-      enabled: true
-      change-log=classpath: db/changelog/db.changelog-master.yaml
+
   jpa:
     hibernate:
       ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+storage:
+  directory: /Users/dziodzi/Desktop
 
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
   api-docs:
     path: /v3/api-docs
+
 custom:
-  links:
-    base-url: http://localhost:8080
+  address: http://localhost
+  ports:
+    this: 8080
+    neural-network: 5001
+    frontend: 3001
   tokens:
     sign-key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQSflKxwRJSMeKKF2QT4fwpMeJf36POk6yJVadQssw5c"

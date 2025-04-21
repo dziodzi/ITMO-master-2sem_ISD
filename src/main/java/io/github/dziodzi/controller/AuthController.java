@@ -37,7 +37,7 @@ public class AuthController implements AuthAPI {
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
-            log.info("Logging out token: " + token);
+            log.info("Logging out token: {}", token);
             logoutService.invalidateToken(token);
         }
         return ResponseEntity.ok("You have successfully logged out");

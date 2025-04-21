@@ -33,7 +33,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleEntityNotFound(EntityNotFoundException e) {
         return buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
     }
-    
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException e) {
+        return buildErrorResponse(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
+    }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResponse> handleDataIntegrityViolation(DataIntegrityViolationException e) {
         return buildErrorResponse(HttpStatus.BAD_REQUEST, "Data integrity violation: " + e.getMessage());
@@ -74,6 +79,10 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
     }
 
+    @ExceptionHandler(NeuralNetworkException.class)
+    public ResponseEntity<ErrorResponse> handleNeuralNetworkException(NeuralNetworkException e) {
+        return buildErrorResponse(HttpStatus.valueOf(e.getStatusCode()), e.getLocalizedMessage());
+    }
 
     private ResponseEntity<ErrorResponse> buildErrorResponse(HttpStatus status, String message) {
         ErrorResponse errorResponse = new ErrorResponse(

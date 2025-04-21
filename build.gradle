@@ -54,6 +54,7 @@ dependencies {
     implementation 'org.springframework.security:spring-security-config:6.3.4'
     implementation group: 'org.springframework.security', name: 'spring-security-web', version: '6.3.1'
     testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.apache.tika:tika-core:2.9.0'
 }
 
 test {
