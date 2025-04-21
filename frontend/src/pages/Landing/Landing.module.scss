@@ -1,0 +1,90 @@
+@use "sass:math";
+
+.landing {
+  background: radial-gradient(ellipse at bottom, #305877 0%, #0c0014 50%, #12031d 100%);
+  font-family: "Segoe UI", sans-serif;
+  color: #0d0d0d;
+
+  section {
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+
+  .hero {
+    overflow: hidden;
+    background: radial-gradient(ellipse at bottom, #305877 0%, #0c0014 50%, #12031d 100%);
+
+    color: white;
+    padding: 6rem 2rem 5rem;
+
+    h1 {
+      font-size: 4rem;
+      margin-bottom: 3rem;
+    }
+
+    p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .uploadWrapper {
+      margin-top: 40px;
+    }
+  }
+
+  .about {
+    background-color: #f8f9fa;
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 1rem auto;
+    }
+  }
+
+  .pipeline {
+    background-color: #ffffff;
+
+    .steps {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+
+      .step {
+        background-color: #f1f1f1;
+        padding: 2rem;
+        border-radius: 12px;
+        width: 200px;
+        transition: 0.3s ease;
+
+        h3 {
+          font-size: 2.5rem;
+          margin-bottom: 1rem;
+        }
+
+        p {
+          font-size: 1.1rem;
+        }
+
+        &:hover {
+          background-color: #e0e0e0;
+        }
+      }
+    }
+  }
+
+  .footer {
+    color: #ccc;
+    padding: 2rem;
+    font-size: 0.9rem;
+    overflow: hidden;
+  }
+}

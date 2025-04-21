@@ -1,0 +1,65 @@
+// Feature.module.scss
+.features {
+  background-color: #f8f9fa;
+  padding: 5rem 2rem;
+  text-align: center;
+
+  h2 {
+    font-size: 2.4rem;
+    margin-bottom: 4rem;
+    color: #0f2027;
+  }
+
+  .featureList {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .featureItem {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    opacity: 0;
+    transform: translateX(0);
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+
+    &.left {
+      flex-direction: row;
+      transform: translateX(-80px);
+    }
+
+    &.right {
+      flex-direction: row-reverse;
+      transform: translateX(80px);
+    }
+
+    &.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .icon img {
+      width: 64px;
+      height: 64px;
+    }
+
+    .text {
+      text-align: left;
+      max-width: 600px;
+
+      h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: #0f2027;
+      }
+
+      p {
+        font-size: 1rem;
+        color: #444;
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+.Header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    z-index: 1000;
+    animation: fadeSlideDown 0.3s ease forwards;
+  
+  
+    .actions {
+      display: flex;
+      gap: 1rem;
+  
+      button {
+        background: none;
+        border: 1px solid #0f2027;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: 0.2s;
+  
+        &:hover {
+          background-color: #0f2027;
+          color: white;
+        }
+      }
+    }
+  }
+  
+  @keyframes fadeSlideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
